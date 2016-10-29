@@ -1,6 +1,7 @@
 language: go
-
 go:
-  - 1.6.3
-
+- 1.6.3
 script: go test -v ./...
+notifications:
+  slack:
+    secure: qWrEpD2mjNXTvugsJQ/M+E0jlYjzSSPKozt3mTlwCWlqRJwd1X+LpBuTvUBapAciaLp9qfk55ZmexlvRfcPQux1+1ACRXeiPb9LUX9kizpSlXxfAuZJRTqNYgUdQNiQSJUVd59p4yaT4keBPC1nplBESxFCQV+FYt5nVSy+a3yelJuhMdSp1nn9RMdDRoZLvrOgv5Qf4E+HiV7/EzKTiN3NyFOTKZUhCo+btPLtvnEgnLWc+jWRZfsB/rFI1bvarBNk/8EoOYbB2OqUpRQidhuReJ8ttKOmcKONzT6fAJJt13XdPJesdKAudLf3sMVnpwaDpbFLFXAntte3fAuTFVLJJcwNzc/GNd7YRatmIqGGiPePImLwSpBrh35m4LdIfkD8YQVRRSNWBYwvkQHyrlG3z4VfKo/6yK3N+z50sFtcYJ3Y4VItCxw6JyH3N2QOqpAjGmJ+K4LZEZKw76xUsCxMuktsp8un4OOjXVBIQY4jQElMN6O5p5YL1ch1jh8wGJqZut19U4rlMMvQ2uAFjtK0WtuibiJDgDhqiXLHHgN9QHCPfAl9mszzzOHXzyRUYdexS4IH74RxcgoZ2gGfJom2hLv8vFdvvZWsP6fJWiNo+34S2bvU8vBOU9HqPcauNFjHXRXd/A50Vd4waz+Nvzby+dmWgVGKx22M9GQnz92Y=
