@@ -20,25 +20,34 @@ type Generator struct {
 	fileHelper FileHelper
 }
 
-func (g Generator) checkPrerequisites(env string) error {
-	if !viper.IsSet("scenarios.all") {
-		return errors.New("'scenarios.all' not configured'")
+func (g Generator) checkPrerequisites(requestedScenario string) error {
+	if err := validateScenario("all", g.fileHelper); err != nil {
+		return err
+	}
+	if requestedScenario != "all" {
+		return validateScenario(requestedScenario, g.fileHelper)
+	}
+	return nil
+}
+
+func validateScenario(scenario string, fileHelper FileHelper) error {
+	if !viper.IsSet("scenarios." + scenario) {
+		return errors.New("'scenarios." + scenario + "' not configured'")
 	}
 
 	templateFolderPath := getTemplateFolderPath()
 
-	allScenarioServices := viper.GetStringSlice("scenarios.all")
-	if len(allScenarioServices) == 0 {
-		return errors.New("'scenarios.all' has no services")
+	scenarioServices := viper.GetStringSlice("scenarios." + scenario)
+	if len(scenarioServices) == 0 {
+		return errors.New("'scenarios." + scenario + "' has no services")
 	}
 
-	for _, templateName := range allScenarioServices {
+	for _, templateName := range scenarioServices {
 		tmplPath := templateFolderPath + templateName + ".yml"
-		if !g.fileHelper.Exists(tmplPath) {
+		if !fileHelper.Exists(tmplPath) {
 			return errors.New("template '" + tmplPath + "' not found")
 		}
 	}
-
 	return nil
 }
 

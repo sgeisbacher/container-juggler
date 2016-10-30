@@ -5,7 +5,8 @@ type FileHelperMock struct {
 		Receives struct {
 			Paths []string
 		}
-		Returns map[string]bool
+		Returns       map[string]bool
+		DefaultReturn bool
 	}
 }
 
@@ -17,5 +18,5 @@ func (fh *FileHelperMock) Exists(path string) bool {
 	if returnBool, found := fh.ExistsCall.Returns[path]; found {
 		return returnBool
 	}
-	return false
+	return fh.ExistsCall.DefaultReturn
 }

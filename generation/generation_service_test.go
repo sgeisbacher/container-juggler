@@ -14,6 +14,7 @@ func TestCheckPrerequisitesFailsOnMissingAllScenario(t *testing.T) {
 
 	viper.Set("scenarios", make(map[string]string))
 	generator := Generator{}
+
 	err := generator.checkPrerequisites("all")
 
 	Expect(err).NotTo(BeNil())
@@ -25,9 +26,43 @@ func TestCheckPrerequisitesFailsOnEmptyAllScenario(t *testing.T) {
 
 	viper.Set("scenarios.all", []string{})
 	generator := Generator{}
+
 	err := generator.checkPrerequisites("all")
 
 	Expect(err).NotTo(BeNil())
+}
+
+func TestCheckPrerequisitesFailsOnMissingRequestedScenario(t *testing.T) {
+	RegisterTestingT(t)
+	viper.New()
+
+	fileHelperMock := &mocks.FileHelperMock{}
+	fileHelperMock.ExistsCall.DefaultReturn = true
+	fileHelperMock.ExistsCall.Returns = map[string]bool{}
+
+	viper.Set("scenarios.all", []string{"gui", "app", "db"})
+	generator := Generator{fileHelper: fileHelperMock}
+
+	err := generator.checkPrerequisites("backenddev")
+
+	Expect(err).NotTo(BeNil())
+}
+
+func TestCheckPrerequisitesPassesOnPresentRequestedScenario(t *testing.T) {
+	RegisterTestingT(t)
+	viper.New()
+
+	fileHelperMock := &mocks.FileHelperMock{}
+	fileHelperMock.ExistsCall.DefaultReturn = true
+	fileHelperMock.ExistsCall.Returns = map[string]bool{}
+
+	viper.Set("scenarios.all", []string{"gui", "app", "db"})
+	viper.Set("scenarios.backenddev", []string{"gui", "db"})
+	generator := Generator{fileHelper: fileHelperMock}
+
+	err := generator.checkPrerequisites("backenddev")
+
+	Expect(err).To(BeNil())
 }
 
 func TestCheckPrerequisitesFailsOnMissingTemplateFile(t *testing.T) {
@@ -35,6 +70,7 @@ func TestCheckPrerequisitesFailsOnMissingTemplateFile(t *testing.T) {
 	viper.New()
 
 	fileHelperMock := &mocks.FileHelperMock{}
+	fileHelperMock.ExistsCall.DefaultReturn = false
 	fileHelperMock.ExistsCall.Returns = map[string]bool{}
 
 	fileHelperMock.ExistsCall.Returns["./path/to/templates/service1tmpl.yml"] = true
@@ -45,6 +81,7 @@ func TestCheckPrerequisitesFailsOnMissingTemplateFile(t *testing.T) {
 	viper.Set("scenarios.all", services)
 
 	generator := Generator{fileHelper: fileHelperMock}
+
 	err := generator.checkPrerequisites("all")
 
 	Expect(err).NotTo(BeNil())
