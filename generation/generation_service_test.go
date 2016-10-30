@@ -19,6 +19,17 @@ func TestCheckPrerequisitesFailsOnMissingAllScenario(t *testing.T) {
 	Expect(err).NotTo(BeNil())
 }
 
+func TestCheckPrerequisitesFailsOnEmptyAllScenario(t *testing.T) {
+	RegisterTestingT(t)
+	viper.New()
+
+	viper.Set("scenarios.all", []string{})
+	generator := Generator{}
+	err := generator.checkPrerequisites("all")
+
+	Expect(err).NotTo(BeNil())
+}
+
 func TestCheckPrerequisitesFailsOnMissingTemplateFile(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()

@@ -28,6 +28,10 @@ func (g Generator) checkPrerequisites(env string) error {
 	templateFolderPath := getTemplateFolderPath()
 
 	allScenarioServices := viper.GetStringSlice("scenarios.all")
+	if len(allScenarioServices) == 0 {
+		return errors.New("'scenarios.all' has no services")
+	}
+
 	for _, templateName := range allScenarioServices {
 		tmplPath := templateFolderPath + templateName + ".yml"
 		if !g.fileHelper.Exists(tmplPath) {
