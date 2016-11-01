@@ -1,6 +1,7 @@
 package generation
 
 import (
+	"encoding/json"
 	"testing"
 
 	. "github.com/onsi/gomega"
@@ -108,4 +109,59 @@ func TestConvertToFolderPath(t *testing.T) {
 	for _, testData := range tableTestData {
 		Expect(convertToFolderPath(testData.path)).To(Equal(testData.expected))
 	}
+}
+
+func TestAddServices(t *testing.T) {
+	RegisterTestingT(t)
+	viper.New()
+
+	expectedComposeMapJSON := `
+{
+  "version": 2,
+  "services": {
+    "app": {
+      "image": "debian:latest",
+      "ports": [
+        "80:8080",
+        "443:8443"
+      ]
+    },
+    "db": {
+      "image": "mysql:latest",
+      "ports": [
+        "3306:3306"
+      ]
+    }
+  }
+}`
+
+	composeMap := map[string]interface{}{
+		"version":  2,
+		"services": make(map[string]interface{}),
+	}
+
+	tmplLoaderMock := &mocks.TemplateLoaderMock{}
+
+	tmplLoaderMock.LoadCall.Returns.Data = make(map[string]interface{})
+	tmplLoaderMock.LoadCall.Returns.Data["app"] = map[string]interface{}{
+		"image": "debian:latest",
+		"ports": []string{
+			"80:8080",
+			"443:8443",
+		},
+	}
+	tmplLoaderMock.LoadCall.Returns.Data["db"] = map[string]interface{}{
+		"image": "mysql:latest",
+		"ports": []string{
+			"3306:3306",
+		},
+	}
+
+	tmplLoaderMock.LoadCall.Returns.Err = make(map[string]error)
+
+	viper.Set("scenarios.frontenddev", []string{"app", "db"})
+	generator := Generator{tmplLoader: tmplLoaderMock}
+	generator.addServices(composeMap, "frontenddev")
+
+	Expect(json.Marshal(composeMap)).To(MatchJSON(expectedComposeMapJSON))
 }

@@ -51,13 +51,33 @@ func validateScenario(scenario string, fileHelper FileHelper) error {
 	return nil
 }
 
-func (g Generator) Generate(env string) error {
-	templateFolderPath := getTemplateFolderPath()
-	allScenarioServices := viper.GetStringSlice("scenarios.all")
-	for _, templateName := range allScenarioServices {
-		g.tmplLoader.Load(templateFolderPath + templateName + ".yml")
+func (g Generator) Generate(scenario string) error {
+	if err := g.checkPrerequisites(scenario); err != nil {
+		return err
 	}
-	return g.checkPrerequisites(env)
+	composeMap := createEmptyComposeMap()
+	g.addServices(composeMap, scenario)
+	return nil
+}
+
+func (g Generator) addServices(composeMap map[string]interface{}, scenario string) error {
+	services := viper.GetStringSlice("scenarios." + scenario)
+	servicesMap := composeMap["services"].(map[string]interface{})
+	for _, serviceName := range services {
+		serviceMap, err := g.tmplLoader.Load(serviceName)
+		if err != nil {
+			return err
+		}
+		servicesMap[serviceName] = serviceMap
+	}
+	return nil
+}
+
+func createEmptyComposeMap() map[string]interface{} {
+	return map[string]interface{}{
+		"version":  2,
+		"services": make(map[string]interface{}),
+	}
 }
 
 func getTemplateFolderPath() string {
