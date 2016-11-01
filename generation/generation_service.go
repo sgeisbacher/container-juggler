@@ -60,7 +60,7 @@ func (g Generator) Generate(scenario string) error {
 	}
 	composeMap := createEmptyComposeMap()
 	g.addServices(composeMap, scenario)
-
+	g.exportComposeMapAsYAML(composeMap)
 	return nil
 }
 
