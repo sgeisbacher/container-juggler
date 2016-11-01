@@ -165,3 +165,37 @@ func TestAddServices(t *testing.T) {
 
 	Expect(json.Marshal(composeMap)).To(MatchJSON(expectedComposeMapJSON))
 }
+
+func TestExportComposeMapAsYAML(t *testing.T) {
+	RegisterTestingT(t)
+
+	expectedDataYAML := `
+version: 2
+services:
+  app:
+    image: debian:latest
+    ports:
+      - 80:8080
+      - 443:8443`
+
+	composeMap := map[string]interface{}{
+		"version": 2,
+		"services": map[string]interface{}{
+			"app": map[string]interface{}{
+				"image": "debian:latest",
+				"ports": []string{
+					"80:8080",
+					"443:8443",
+				},
+			},
+		},
+	}
+
+	fileHelperMock := &mocks.FileHelperMock{}
+	generator := Generator{fileHelper: fileHelperMock}
+
+	generator.exportComposeMapAsYAML(composeMap)
+
+	Expect(fileHelperMock.WriteCall.Receives.Path).To(Equal("docker-compose.yml"))
+	Expect(fileHelperMock.WriteCall.Receives.Data).To(MatchYAML(expectedDataYAML))
+}

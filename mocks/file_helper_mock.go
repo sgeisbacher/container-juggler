@@ -8,6 +8,15 @@ type FileHelperMock struct {
 		Returns       map[string]bool
 		DefaultReturn bool
 	}
+	WriteCall struct {
+		Receives struct {
+			Path string
+			Data string
+		}
+		Returns struct {
+			Error error
+		}
+	}
 }
 
 func (fh *FileHelperMock) Exists(path string) bool {
@@ -19,4 +28,10 @@ func (fh *FileHelperMock) Exists(path string) bool {
 		return returnBool
 	}
 	return fh.ExistsCall.DefaultReturn
+}
+
+func (fh *FileHelperMock) Write(path string, data string) error {
+	fh.WriteCall.Receives.Path = path
+	fh.WriteCall.Receives.Data = data
+	return fh.WriteCall.Returns.Error
 }

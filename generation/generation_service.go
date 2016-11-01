@@ -4,6 +4,8 @@ import (
 	"errors"
 	"strings"
 
+	yaml "gopkg.in/yaml.v2"
+
 	"github.com/spf13/viper"
 )
 
@@ -13,6 +15,7 @@ type TemplateLoader interface {
 
 type FileHelper interface {
 	Exists(path string) bool
+	Write(path, data string) error
 }
 
 type Generator struct {
@@ -57,6 +60,7 @@ func (g Generator) Generate(scenario string) error {
 	}
 	composeMap := createEmptyComposeMap()
 	g.addServices(composeMap, scenario)
+
 	return nil
 }
 
@@ -70,6 +74,15 @@ func (g Generator) addServices(composeMap map[string]interface{}, scenario strin
 		}
 		servicesMap[serviceName] = serviceMap
 	}
+	return nil
+}
+
+func (g Generator) exportComposeMapAsYAML(composeMap map[string]interface{}) error {
+	composeYAML, err := yaml.Marshal(composeMap)
+	if err != nil {
+		return err
+	}
+	g.fileHelper.Write("docker-compose.yml", string(composeYAML))
 	return nil
 }
 
