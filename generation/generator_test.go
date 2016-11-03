@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	. "github.com/onsi/gomega"
-	"github.com/sgeisbacher/docker-compose-env-manager/mocks"
+	"github.com/sgeisbacher/compose-env-manager/mocks"
 	"github.com/spf13/viper"
 )
 

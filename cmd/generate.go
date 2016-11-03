@@ -17,7 +17,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/sgeisbacher/docker-compose-env-manager/generation"
+	"github.com/sgeisbacher/compose-env-manager/generation"
 	"github.com/spf13/cobra"
 )
 

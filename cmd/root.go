@@ -24,15 +24,12 @@ import (
 
 var cfgFile string
 
-// RootCmd represents the base command when called without any subcommands
 var RootCmd = &cobra.Command{
-	Use:   "docker-compose-env-manager",
-	Short: "docker-compose-env-manager manages different environment-scenarios",
+	Use:   "compose-env-manager",
+	Short: "compose-env-manager manages different environment-scenarios",
 	Long:  `TODO: long description ...`,
 }
 
-// Execute adds all child commands to the root command sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -42,15 +39,14 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./docker-compose-env-manager.yml)")
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./compose-env-manager.yml)")
 }
 
-// initConfig reads in config file and ENV variables if set.
 func initConfig() {
-	if cfgFile != "" { // enable ability to specify config file via flag
+	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile)
 	} else {
-		viper.SetConfigName("docker-compose-env-manager") // name of config file (without extension)
+		viper.SetConfigName("compose-env-manager")
 		viper.AddConfigPath(".")
 	}
 
