@@ -15,7 +15,7 @@
 package cmd
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/sgeisbacher/compose-env-manager/generation"
 	"github.com/spf13/cobra"
@@ -32,8 +32,12 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		generator := generation.CreateGenerator()
-		if err := generator.Generate("all"); err != nil {
-			fmt.Printf("%v\n", err)
+		scenario := "all"
+		if len(args) > 0 {
+			scenario = args[0]
+		}
+		if err := generator.Generate(scenario); err != nil {
+			log.Fatal(err)
 		}
 	},
 }
