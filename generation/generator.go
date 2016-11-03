@@ -3,6 +3,7 @@ package generation
 import (
 	"errors"
 	"fmt"
+	"net"
 	"strings"
 
 	yaml "gopkg.in/yaml.v2"
@@ -19,9 +20,14 @@ type FileHelper interface {
 	Write(path, data string) error
 }
 
+type IPDetector interface {
+	Detect() net.IP
+}
+
 type Generator struct {
 	tmplLoader TemplateLoader
 	fileHelper FileHelper
+	ipDetector IPDetector
 }
 
 func CreateGenerator() Generator {
