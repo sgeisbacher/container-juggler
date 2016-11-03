@@ -9,5 +9,5 @@ func (fh DefaultFileHelper) Exists(path string) bool {
 }
 
 func (fh DefaultFileHelper) Write(path string, data string) error {
-	return ioutil.WriteFile(path, data, 0644)
+	return ioutil.WriteFile(path, []byte(data), 0644)
 }
