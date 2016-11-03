@@ -11,7 +11,7 @@ import (
 )
 
 type TemplateLoader interface {
-	Load(path string) (map[string]interface{}, error)
+	Load(path string) (map[interface{}]interface{}, error)
 }
 
 type FileHelper interface {
