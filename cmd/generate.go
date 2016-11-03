@@ -16,14 +16,11 @@ package cmd
 
 import (
 	"fmt"
-	"strings"
 
+	"github.com/sgeisbacher/docker-compose-env-manager/generation"
 	"github.com/spf13/cobra"
 )
 
-var toogle bool
-
-// generateCmd represents the generate command
 var generateCmd = &cobra.Command{
 	Use:   "generate",
 	Short: "A brief description of your command",
@@ -34,36 +31,13 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		/*		dict := viper.GetStringMap("scenarios")
-				for key, _ := range dict {
-					fmt.Println(key, "- ...")
-					for _, lelem := range viper.GetStringSlice("scenarios." + key) {
-						fmt.Println("   ", lelem)
-					}
-				}
-				fmt.Println("")
-				fmt.Println("")
-				fmt.Println("")
-				dict2 := viper.GetStringMap("*")
-				fmt.Println(dict2) */
-		fmt.Println("gen-cmd-args:", strings.Join(args, " "))
-		if toogle {
-			fmt.Println("gen-cmd toogled:")
+		generator := generation.CreateGenerator()
+		if err := generator.Generate("all"); err != nil {
+			fmt.Printf("%v\n", err)
 		}
 	},
 }
 
 func init() {
 	RootCmd.AddCommand(generateCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// generateCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	generateCmd.Flags().BoolVarP(&toogle, "toggle", "t", false, "Help message for toggle")
-
 }

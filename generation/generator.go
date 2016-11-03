@@ -23,6 +23,15 @@ type Generator struct {
 	fileHelper FileHelper
 }
 
+func CreateGenerator() Generator {
+	fileHelper := DefaultFileHelper{}
+	tmplLoader := DefaultTemplateLoader{}
+	return Generator{
+		tmplLoader: tmplLoader,
+		fileHelper: fileHelper,
+	}
+}
+
 func (g Generator) checkPrerequisites(requestedScenario string) error {
 	if err := validateScenario("all", g.fileHelper); err != nil {
 		return err
