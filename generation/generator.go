@@ -103,7 +103,7 @@ func (g Generator) exportComposeMapAsYAML(composeMap map[string]interface{}) err
 
 func createEmptyComposeMap() map[string]interface{} {
 	return map[string]interface{}{
-		"version":  2,
+		"version":  "2",
 		"services": make(map[string]interface{}),
 	}
 }
