@@ -69,8 +69,12 @@ func (g Generator) Generate(scenario string) error {
 		return err
 	}
 	composeMap := createEmptyComposeMap()
-	g.addServices(composeMap, scenario)
-	g.exportComposeMapAsYAML(composeMap)
+	if err := g.addServices(composeMap, scenario); err != nil {
+		return err
+	}
+	if err := g.exportComposeMapAsYAML(composeMap); err != nil {
+		return err
+	}
 	return nil
 }
 
