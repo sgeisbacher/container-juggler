@@ -2,6 +2,7 @@ package generation
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 
 	yaml "gopkg.in/yaml.v2"
@@ -77,7 +78,8 @@ func (g Generator) addServices(composeMap map[string]interface{}, scenario strin
 	services := viper.GetStringSlice("scenarios." + scenario)
 	servicesMap := composeMap["services"].(map[string]interface{})
 	for _, serviceName := range services {
-		serviceMap, err := g.tmplLoader.Load(serviceName)
+		path := fmt.Sprintf("%v/%v.yml", getTemplateFolderPath(), serviceName)
+		serviceMap, err := g.tmplLoader.Load(path)
 		if err != nil {
 			return err
 		}
