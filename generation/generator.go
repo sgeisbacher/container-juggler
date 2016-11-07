@@ -77,7 +77,8 @@ func (g Generator) Generate(scenario string) error {
 		return err
 	}
 	composeMap := createEmptyComposeMap()
-	if err := g.addServices(composeMap, scenario); err != nil {
+	missingServices := detectMissingServices(scenario)
+	if err := g.addServices(composeMap, scenario, missingServices); err != nil {
 		return err
 	}
 	if err := g.exportComposeMapAsYAML(composeMap); err != nil {
@@ -86,18 +87,53 @@ func (g Generator) Generate(scenario string) error {
 	return nil
 }
 
-func (g Generator) addServices(composeMap map[string]interface{}, scenario string) error {
+func detectMissingServices(scenario string) []string {
+	if scenario == "all" {
+		return []string{}
+	}
+	allServices := viper.GetStringSlice("scenarios.all")
+	scenarioServices := viper.GetStringSlice("scenarios." + scenario)
+
+	var missingServices []string
+	for _, allSvc := range allServices {
+		found := false
+		for _, scenSvc := range scenarioServices {
+			if allSvc == scenSvc {
+				found = true
+			}
+		}
+		if !found {
+			missingServices = append(missingServices, allSvc)
+		}
+	}
+	return missingServices
+}
+
+func (g Generator) addServices(composeMap map[string]interface{}, scenario string, missingServices []string) error {
 	services := viper.GetStringSlice("scenarios." + scenario)
 	servicesMap := composeMap["services"].(map[string]interface{})
 	for _, serviceName := range services {
-		path := fmt.Sprintf("%v/%v.yml", getTemplateFolderPath(), serviceName)
+		path := fmt.Sprintf("%v%v.yml", getTemplateFolderPath(), serviceName)
 		serviceMap, err := g.tmplLoader.Load(path)
 		if err != nil {
 			return err
 		}
+		g.addExtraHosts(serviceMap, missingServices)
 		servicesMap[serviceName] = serviceMap
 	}
 	return nil
+}
+
+func (g Generator) addExtraHosts(serviceMap map[string]interface{}, missingServices []string) {
+	if len(missingServices) == 0 {
+		return
+	}
+	extraHosts := []string{}
+	for _, svc := range missingServices {
+		ipAddr := g.ipDetector.Detect()
+		extraHosts = append(extraHosts, fmt.Sprintf("%v:%v", svc, ipAddr.String()))
+	}
+	serviceMap["extra_hosts"] = extraHosts
 }
 
 func (g Generator) exportComposeMapAsYAML(composeMap map[string]interface{}) error {
