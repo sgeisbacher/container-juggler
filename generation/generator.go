@@ -73,6 +73,7 @@ func (g Generator) Generate(scenario string) error {
 	if len(scenario) == 0 {
 		scenario = "all"
 	}
+	fmt.Printf("generating '%v' environment ...\n", scenario)
 	if err := g.checkPrerequisites(scenario); err != nil {
 		return err
 	}
@@ -84,6 +85,7 @@ func (g Generator) Generate(scenario string) error {
 	if err := g.exportComposeMapAsYAML(composeMap); err != nil {
 		return err
 	}
+	fmt.Println("successfully generated 'docker-compose.yml'")
 	return nil
 }
 
