@@ -12,7 +12,7 @@ import (
 )
 
 type TemplateLoader interface {
-	Load(path string) (map[interface{}]interface{}, error)
+	Load(path string) (map[string]interface{}, error)
 }
 
 type FileHelper interface {

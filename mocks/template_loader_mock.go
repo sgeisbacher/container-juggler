@@ -1,12 +1,14 @@
 package mocks
 
+import "fmt"
+
 type TemplateLoaderMock struct {
 	LoadCall struct {
 		Receives struct {
 			Paths []string
 		}
 		Returns struct {
-			Data map[string]interface{}
+			Data map[interface{}]interface{}
 			Err  map[string]error
 		}
 	}
@@ -21,6 +23,8 @@ func (tl *TemplateLoaderMock) Load(path string) (map[string]interface{}, error) 
 	var returnData map[string]interface{}
 	if dataUnconverted, found := tl.LoadCall.Returns.Data[path]; found {
 		returnData = dataUnconverted.(map[string]interface{})
+	} else {
+		panic(fmt.Sprintf("path '%v' not found", path))
 	}
 	if returnErr, found := tl.LoadCall.Returns.Err[path]; found {
 		return returnData, returnErr

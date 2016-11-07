@@ -115,9 +115,8 @@ func TestAddServices(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()
 
-	expectedComposeMapJSON := `
-{
-  "version": 2,
+	expectedComposeMapJSON := `{
+  "version": "2",
   "services": {
     "app": {
       "image": "debian:latest",
@@ -136,21 +135,21 @@ func TestAddServices(t *testing.T) {
 }`
 
 	composeMap := map[string]interface{}{
-		"version":  2,
+		"version":  "2",
 		"services": make(map[string]interface{}),
 	}
 
 	tmplLoaderMock := &mocks.TemplateLoaderMock{}
 
-	tmplLoaderMock.LoadCall.Returns.Data = make(map[string]interface{})
-	tmplLoaderMock.LoadCall.Returns.Data["app"] = map[string]interface{}{
+	tmplLoaderMock.LoadCall.Returns.Data = make(map[interface{}]interface{})
+	tmplLoaderMock.LoadCall.Returns.Data["./path/to/templates/app.yml"] = map[string]interface{}{
 		"image": "debian:latest",
 		"ports": []string{
 			"80:8080",
 			"443:8443",
 		},
 	}
-	tmplLoaderMock.LoadCall.Returns.Data["db"] = map[string]interface{}{
+	tmplLoaderMock.LoadCall.Returns.Data["./path/to/templates/db.yml"] = map[string]interface{}{
 		"image": "mysql:latest",
 		"ports": []string{
 			"3306:3306",
@@ -161,7 +160,10 @@ func TestAddServices(t *testing.T) {
 
 	viper.Set("scenarios.frontenddev", []string{"app", "db"})
 	generator := Generator{tmplLoader: tmplLoaderMock}
-	generator.addServices(composeMap, "frontenddev")
+	err := generator.addServices(composeMap, "frontenddev", []string{})
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	Expect(json.Marshal(composeMap)).To(MatchJSON(expectedComposeMapJSON))
 }
