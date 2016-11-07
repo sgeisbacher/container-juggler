@@ -2,6 +2,7 @@ package generation
 
 import (
 	"encoding/json"
+	"log"
 	"testing"
 
 	. "github.com/onsi/gomega"

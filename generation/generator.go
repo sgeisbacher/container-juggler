@@ -31,11 +31,10 @@ type Generator struct {
 }
 
 func CreateGenerator() Generator {
-	fileHelper := DefaultFileHelper{}
-	tmplLoader := DefaultTemplateLoader{}
 	return Generator{
-		tmplLoader: tmplLoader,
-		fileHelper: fileHelper,
+		tmplLoader: DefaultTemplateLoader{},
+		fileHelper: DefaultFileHelper{},
+		ipDetector: UplinkIPDetector{},
 	}
 }
 
@@ -71,6 +70,9 @@ func validateScenario(scenario string, fileHelper FileHelper) error {
 }
 
 func (g Generator) Generate(scenario string) error {
+	if len(scenario) == 0 {
+		scenario = "all"
+	}
 	if err := g.checkPrerequisites(scenario); err != nil {
 		return err
 	}
