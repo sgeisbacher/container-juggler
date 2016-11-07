@@ -47,7 +47,6 @@ func (vl VolumeLoader) Load(force bool) error {
 		}
 		fmt.Printf("extracting '%v' -> '%v' ... ", volume.Source, volume.Target)
 		file, err := vl.downloader.Download(volume.Source)
-		fmt.Printf("\n%v\n", file.Name())
 		defer os.Remove(file.Name())
 		if err != nil {
 			return err
