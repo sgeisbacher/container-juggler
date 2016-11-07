@@ -23,8 +23,7 @@ import (
 
 var listCmd = &cobra.Command{
 	Use:   "list",
-	Short: "A brief description of your command",
-	Long:  `A longer description`,
+	Short: "lists all available environments",
 	Run: func(cmd *cobra.Command, args []string) {
 		scenarios := viper.GetStringMapStringSlice("scenarios")
 		for key, _ := range scenarios {

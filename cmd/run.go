@@ -24,8 +24,7 @@ import (
 
 var runCmd = &cobra.Command{
 	Use:   "run",
-	Short: "A brief description of your command",
-	Long:  `A longer description`,
+	Short: "runs 'docker-compose up'",
 	Run: func(cmd *cobra.Command, args []string) {
 		path, err := exec.LookPath("docker-compose")
 		if err != nil {

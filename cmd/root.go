@@ -27,7 +27,10 @@ var cfgFile string
 var RootCmd = &cobra.Command{
 	Use:   "compose-env-manager",
 	Short: "compose-env-manager manages different environment-scenarios",
-	Long:  `TODO: long description ...`,
+	Long: `compose-env-manager manages different environment-scenarios for docker-compose. 
+it generates the 'docker-compose.yml'-file based on specified scenario. 
+	
+for missing-services in the specied scenario compared to 'all'-scenario, it adds 'extra-hosts'-entries to all other services. so your services running in docker will try to connect the missing services on your host-machine`,
 }
 
 func Execute() {

@@ -23,14 +23,11 @@ import (
 )
 
 var generateCmd = &cobra.Command{
-	Use:   "generate",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Use:   "generate [scenario]",
+	Short: "generates docker-compose.yml for specified scenario",
+	Long: `TODO: longer description
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+[scenario] defaults to all`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("running generate command ...")
 		generator := generation.CreateGenerator()

@@ -23,8 +23,8 @@ import (
 
 var initCmd = &cobra.Command{
 	Use:   "init",
-	Short: "A brief description of your command",
-	Long:  `A longer description`,
+	Short: "initializes all volumes (based on 'volume-init'-config)",
+	Long:  `'init' downloads the zips and extracts them based on 'volume-init'-configuration in compose-env-manager.yml`,
 	Run: func(cmd *cobra.Command, args []string) {
 		loader := volumeadmin.New()
 		if err := loader.Load(false); err != nil {
