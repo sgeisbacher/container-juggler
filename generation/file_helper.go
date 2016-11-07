@@ -1,11 +1,15 @@
 package generation
 
-import "io/ioutil"
+import (
+	"io/ioutil"
+	"os"
+)
 
 type DefaultFileHelper struct{}
 
 func (fh DefaultFileHelper) Exists(path string) bool {
-	return true
+	_, err := os.Stat(path)
+	return err == nil
 }
 
 func (fh DefaultFileHelper) Write(path string, data string) error {
