@@ -1,0 +1,12 @@
+templateFolderPath: ./examples/basic/templates/
+scenarios:
+    all:
+        - frontend
+        - app
+        - db
+    backend:
+        - frontend
+        - db
+    frontend:
+        - app
+        - db
