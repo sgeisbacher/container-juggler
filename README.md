@@ -40,13 +40,12 @@ volume-init:
       source: http://example.org/app-data.zip
       target: ./data/app
     - name: mysql-data-dir
-      source: http://example.org/db-data.zip
+      source: /path/to/file.zip 
       target: ./data/mysql
 ```
 
 > **Note!**  
 > - Don't forget to add this data-directory to .gitignore-file ;-)  
-> - Currently only HTTP-Zip-Sources are supported!!!
 
 ## Sample Configuration
 ### compose-env-manager.yml
