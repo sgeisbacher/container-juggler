@@ -87,6 +87,23 @@ please check:
 ```bash
 compose-env-manager help
 ```
+
+
+## Development setup
+
+In order to use the same versions of the dependencies we provide a
+`vendor/vendor.json` file which you can use with [govendor][]
+
+```bash
+govendor sync
+```
+
+Once you have all dependencies inside the `vendor` folder, you can run the tests
+with `make test`.
+
+[govendor]: https://github.com/kardianos/govendor
+
+
 ## TODOS
 - check system prerequisites in bash(bat)-wrapper (python3, docker, ...)
 - ~~detect required extra-hosts by diffing all-scenario with current-scenario~~
