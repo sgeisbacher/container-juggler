@@ -1,6 +1,10 @@
 language: go
 go:
 - 1.6.3
+- 1.7.x
+install:
+  - go get github.com/kardianos/govendor
+  - make get-deps
 script: make test
 notifications:
   slack:
