@@ -1,0 +1,8 @@
+build: ./examples/volume/templates/app
+links:
+    - db
+ports:
+    - "8080:8080"
+volumes:
+    - ./data/app/:/tmp/images
+
