@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Basic example</title>
+        <style>
+            button {
+                margin-top: 10px;
+                font-size: 25px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>/data/</h1>
+        <div id="data">
+        </div>
+        <div>
+            <button id="addData">add data</button>
+        </div>
+
+    </body>
+    <script>
+        function fetchData() {
+            fetch('/rest/data/')
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(json) {
+                    var content = json.map((item) => {
+                        return `id: ${item._id}, data: ${item.data}`;
+                    }).join("<br/>");
+                    document.querySelector('#data').innerHTML = content;
+                })
+                .catch(function(err) {
+                    window.alert(err);
+                });
+        }
+        fetchData();
+        document.querySelector('#addData').addEventListener('click', function() {
+            fetch('/rest/data/', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        data: 'some new data'
+                    })
+                }).then(function() {
+                    fetchData();
+                })
+                .catch(function(err) {
+                    window.alert(err);
+                });
+        });
+    </script>
+</html>

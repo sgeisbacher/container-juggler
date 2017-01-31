@@ -87,6 +87,22 @@ please check:
 ```bash
 compose-env-manager help
 ```
+
+## Examples
+
+There are examples available in the `examples` folder, showcasing how different configurations could look like.
+
+The `basic` example contains a configuration for a simple setup with a `frontend (nginx)`, `backend (nodejs)` and `db (mongodb)`.
+
+In order to generate and run the `basic` example with the `all` scenario, you need to execute the following commands from the repository root:
+
+```
+cd examples/basic
+compose-env-manager generate all
+compose-env-manager run all
+```
+
+
 ## TODOS
 - check system prerequisites in bash(bat)-wrapper (python3, docker, ...)
 - ~~detect required extra-hosts by diffing all-scenario with current-scenario~~
