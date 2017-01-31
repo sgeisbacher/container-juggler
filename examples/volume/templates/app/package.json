@@ -1,0 +1,10 @@
+{
+    "name": "compose-env-manager-test-app-volumes",
+    "main": "index.js",
+    "dependencies": {
+        "express": "^4.14.0",
+        "body-parser": "^1.15.2",
+        "mongodb": "^2.2.12"
+    }
+}
+

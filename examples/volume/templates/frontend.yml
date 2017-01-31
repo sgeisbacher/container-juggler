@@ -1,0 +1,6 @@
+build: ./examples/basic/templates/frontend
+links:
+    - app
+ports:
+    - "8000:80"
+
