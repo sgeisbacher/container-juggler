@@ -1,4 +1,4 @@
-templateFolderPath: ./examples/basic/templates/
+templateFolderPath: ./templates/
 scenarios:
     all:
         - frontend

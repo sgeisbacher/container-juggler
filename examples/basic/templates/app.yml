@@ -1,4 +1,4 @@
-build: ./examples/basic/templates/app
+build: ./app
 links:
     - db
 ports:

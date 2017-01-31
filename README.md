@@ -97,8 +97,9 @@ The `basic` example contains a configuration for a simple setup with a `frontend
 In order to generate and run the `basic` example with the `all` scenario, you need to execute the following commands from the repository root:
 
 ```
-./compose-env-manager generate --config examples/basic/compose-env-manager.yml
-./compose-env-manager run --config examples/basic/compose-env-manager.yml
+cd examples/basic
+compose-env-manager generate all
+compose-env-manager run all
 ```
 
 
