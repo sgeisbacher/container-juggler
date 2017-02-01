@@ -1,4 +1,5 @@
 # compose-env-manager
+[![Build Status](https://travis-ci.org/sgeisbacher/compose-env-manager.svg?branch=master)](https://travis-ci.org/sgeisbacher/compose-env-manager)  
 compose-env-manager is a wrapper for **docker-compose**.
 
 It preruns a *docker-compose.yml*-file-generator, which renders based on *scenarios* defined in *compose-env-manager.yml*.  

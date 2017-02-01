@@ -23,3 +23,5 @@ _testmain.go
 *.test
 *.prof
 .vscode
+compose-env-manager-darwin-amd64
+compose-env-manager-linux-amd64
