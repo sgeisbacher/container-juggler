@@ -47,10 +47,10 @@ func (vl VolumeLoader) Load(force bool) error {
 		}
 		fmt.Printf("extracting '%v' -> '%v' ... ", volume.Source, volume.Target)
 		file, err := vl.downloader.Download(volume.Source)
-		defer os.Remove(file.Name())
 		if err != nil {
 			return err
 		}
+		defer os.Remove(file.Name())
 		if err := zipExtractor.Extract(file.Name(), volume.Target); err != nil {
 			return err
 		}
