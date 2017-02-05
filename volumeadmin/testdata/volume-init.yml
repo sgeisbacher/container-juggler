@@ -1,0 +1,7 @@
+volume-init:
+    - name: app-data-dir
+      source: http://example.org/app-data.zip
+      target: ./data/app
+    - name: mysql-data-dir
+      source: http://example.org/db-data.zip
+      target: ./data/mysql

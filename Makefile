@@ -1,3 +1,4 @@
+get-deps:
+	govendor sync
 test:
-	go get -t -v ./...
-	go test -v ./...
+	go test -v $(shell go list ./... | grep -v /vendor/)

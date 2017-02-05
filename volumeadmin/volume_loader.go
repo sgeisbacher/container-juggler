@@ -28,8 +28,6 @@ type Volume struct {
 	Target string
 }
 
-type VolumeInit []Volume
-
 func (vl VolumeLoader) Load(force bool) error {
 	zipExtractor := extractor.NewZip()
 	if !viper.IsSet("volume-init") {
@@ -37,8 +35,10 @@ func (vl VolumeLoader) Load(force bool) error {
 		return nil
 	}
 
-	volumes := VolumeInit{}
-	viper.UnmarshalKey("volume-init", &volumes)
+	var volumes []Volume
+	if err := viper.UnmarshalKey("volume-init", &volumes); err != nil {
+		return err
+	}
 
 	for _, volume := range volumes {
 		if _, err := os.Stat(volume.Target); err == nil {
