@@ -1,2 +1,14 @@
+---
+engines:
+  golint:
+    enabled: true
+  govet:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+  - "**.go"
 exclude_paths:
-- "examples/"
+- vendor/
+- examples/
