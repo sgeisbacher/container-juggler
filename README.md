@@ -1,5 +1,5 @@
 # compose-env-manager
-[![Build Status](https://travis-ci.org/sgeisbacher/compose-env-manager.svg?branch=master)](https://travis-ci.org/sgeisbacher/compose-env-manager)  
+[![Build Status](https://travis-ci.org/sgeisbacher/compose-env-manager.svg?branch=master)](https://travis-ci.org/sgeisbacher/compose-env-manager) [![Code Climate](https://codeclimate.com/github/sgeisbacher/compose-env-manager/badges/gpa.svg)](https://codeclimate.com/github/sgeisbacher/compose-env-manager) [![Test Coverage](https://codeclimate.com/github/sgeisbacher/compose-env-manager/badges/coverage.svg)](https://codeclimate.com/github/sgeisbacher/compose-env-manager/coverage) [![Issue Count](https://codeclimate.com/github/sgeisbacher/compose-env-manager/badges/issue_count.svg)](https://codeclimate.com/github/sgeisbacher/compose-env-manager)  
 compose-env-manager is a wrapper for **docker-compose**.
 
 It preruns a *docker-compose.yml*-file-generator, which renders based on *scenarios* defined in *compose-env-manager.yml*.  
