@@ -25,3 +25,6 @@ _testmain.go
 .vscode
 compose-env-manager-darwin-amd64
 compose-env-manager-linux-amd64
+vendor/
+!vendor/vendor.json
+coverage.out
