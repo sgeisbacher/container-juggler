@@ -123,14 +123,13 @@ with `make test`.
 - ~~stability-adjustments (no args, ...)~~
 - add template-loading from remote-server
 - remove hardcoded-dns-server-ip
-- create .bat-wrapper
 - test on windows
 - ~~add global extra-hosts to compose-env-manager.yml~~
 - ~~check scenario "all" is present (in configuration)~~
 - ~~check all template-files of scenario "all" are present~~
 - selected scenario:
-    - detect missing services (against "all"-scenario)
-    - add extra-hosts for missing scenarios
+    - ~~detect missing services (against "all"-scenario)~~
+    - ~~add extra-hosts for missing scenarios~~
     - add extra-hosts for global external-services
-    - add all services to compose-data-map
-- gen yaml and write it to docker-compose.yml 
+    - ~~add all services to compose-data-map~~
+- ~~gen yaml and write it to docker-compose.yml~~
