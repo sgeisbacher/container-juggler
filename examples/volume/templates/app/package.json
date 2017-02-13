@@ -1,5 +1,5 @@
 {
-    "name": "compose-env-manager-test-app-volumes",
+    "name": "container-juggler-test-app-volumes",
     "main": "index.js",
     "dependencies": {
         "express": "^4.14.0",

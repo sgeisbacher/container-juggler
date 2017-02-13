@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/sgeisbacher/compose-env-manager/generation"
+	"github.com/sgeisbacher/container-juggler/generation"
 	"github.com/spf13/cobra"
 )
 
