@@ -177,36 +177,6 @@
 			"revisionTime": "2016-12-29T18:51:04Z"
 		},
 		{
-			"checksumSHA1": "D2Q+z+BZXHQSyo85veyQ8Kqyp38=",
-			"path": "github.com/sgeisbacher/compose-env-manager",
-			"revision": "0a4b91a8b7b9b25ce8b115213a6d5a502fb937f1",
-			"revisionTime": "2016-11-07T12:25:13Z"
-		},
-		{
-			"checksumSHA1": "22PdBdyqN6sZs0fWck6Hx580kAU=",
-			"path": "github.com/sgeisbacher/compose-env-manager/cmd",
-			"revision": "0a4b91a8b7b9b25ce8b115213a6d5a502fb937f1",
-			"revisionTime": "2016-11-07T12:25:13Z"
-		},
-		{
-			"checksumSHA1": "+W2LtDxOHKWzAtrrLK4d+Iv+khQ=",
-			"path": "github.com/sgeisbacher/compose-env-manager/generation",
-			"revision": "0a4b91a8b7b9b25ce8b115213a6d5a502fb937f1",
-			"revisionTime": "2016-11-07T12:25:13Z"
-		},
-		{
-			"checksumSHA1": "0qt1RJEzUMvSe3evhjintqD3ftw=",
-			"path": "github.com/sgeisbacher/compose-env-manager/mocks",
-			"revision": "0a4b91a8b7b9b25ce8b115213a6d5a502fb937f1",
-			"revisionTime": "2016-11-07T12:25:13Z"
-		},
-		{
-			"checksumSHA1": "4lDlTM1h3tTeI3oJ0avINCqGdFo=",
-			"path": "github.com/sgeisbacher/compose-env-manager/volumeadmin",
-			"revision": "0a4b91a8b7b9b25ce8b115213a6d5a502fb937f1",
-			"revisionTime": "2016-11-07T12:25:13Z"
-		},
-		{
 			"checksumSHA1": "lBehULzb2/kIK3wZ0gz2yNmHq9s=",
 			"path": "github.com/spf13/afero",
 			"revision": "72b31426848c6ef12a7a8e216708cb0d1530f074",
