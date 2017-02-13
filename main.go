@@ -1,6 +1,6 @@
 package main
 
-import "github.com/sgeisbacher/compose-env-manager/cmd"
+import "github.com/sgeisbacher/container-juggler/cmd"
 
 func main() {
 	cmd.Execute()

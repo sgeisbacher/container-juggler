@@ -1,8 +1,8 @@
-# compose-env-manager
-[![Build Status](https://travis-ci.org/sgeisbacher/compose-env-manager.svg?branch=master)](https://travis-ci.org/sgeisbacher/compose-env-manager) [![Code Climate](https://codeclimate.com/github/sgeisbacher/compose-env-manager/badges/gpa.svg)](https://codeclimate.com/github/sgeisbacher/compose-env-manager) [![Go Report Card](https://goreportcard.com/badge/github.com/sgeisbacher/compose-env-manager)](https://goreportcard.com/report/github.com/sgeisbacher/compose-env-manager) [![Coverage Status](https://coveralls.io/repos/github/sgeisbacher/compose-env-manager/badge.svg?branch=master)](https://coveralls.io/github/sgeisbacher/compose-env-manager?branch=master) [![Issue Count](https://codeclimate.com/github/sgeisbacher/compose-env-manager/badges/issue_count.svg)](https://codeclimate.com/github/sgeisbacher/compose-env-manager)  
-compose-env-manager is a wrapper for **docker-compose**.
+# container-juggler
+[![Build Status](https://travis-ci.org/sgeisbacher/container-juggler.svg?branch=master)](https://travis-ci.org/sgeisbacher/container-juggler) [![Code Climate](https://codeclimate.com/github/sgeisbacher/container-juggler/badges/gpa.svg)](https://codeclimate.com/github/sgeisbacher/container-juggler) [![Go Report Card](https://goreportcard.com/badge/github.com/sgeisbacher/container-juggler)](https://goreportcard.com/report/github.com/sgeisbacher/container-juggler) [![Coverage Status](https://coveralls.io/repos/github/sgeisbacher/container-juggler/badge.svg?branch=master)](https://coveralls.io/github/sgeisbacher/container-juggler?branch=master) [![Issue Count](https://codeclimate.com/github/sgeisbacher/container-juggler/badges/issue_count.svg)](https://codeclimate.com/github/sgeisbacher/container-juggler)  
+**container-juggler** is a wrapper/config-generator for **docker-compose** to manage different development-scenarios.
 
-It preruns a *docker-compose.yml*-file-generator, which renders based on *scenarios* defined in *compose-env-manager.yml*.  
+It preruns a *docker-compose.yml*-file-generator, which renders based on *scenarios* defined in *container-juggler.yml*.  
 This means you define multiple *scenarios* (scenario *all* is required, which is also the base for other scenarios).  
 Other scenarios must be subsets of the *all*-scenario.  
 The renderer will detect missing services by diffing the selected with the all-*scenario* and adds them as */etc/hosts*-entries (via docker's extra-hosts-option) in each of the services. So requests to missing services will be routed to your host-machine.  
@@ -11,7 +11,7 @@ Now you are able to run parts of your multi-tier-application directly on your ho
 ## Installation
 todo
 ## Project-Configuration
-- create a **compose-env-manager.yml** in the root-folder of your project
+- create a **container-juggler.yml** in the root-folder of your project
 - add at least the *all*-scenario, e.g.:
 
 ```yaml
@@ -22,7 +22,7 @@ scenarios:
     - app
     - db
 ```
-- *compose-env-manager* will lookup the service-templates in **./templates/\<service-name\>.yml**. So create your service-templates (like in the example above *frontend.yml*, *app.yml* and *db.yml*) as you know from [docker-compose-file-reference](https://docs.docker.com/compose/compose-file/) in that folder. e.g.:
+- *container-juggler* will lookup the service-templates in **./templates/\<service-name\>.yml**. So create your service-templates (like in the example above *frontend.yml*, *app.yml* and *db.yml*) as you know from [docker-compose-file-reference](https://docs.docker.com/compose/compose-file/) in that folder. e.g.:
 
 ```yaml
 image: nginx
@@ -32,8 +32,8 @@ ports:
 ## Additional Configuration
 ### volume-init
 If you run *docker-compose up* your database and all other docker-volumes will be empty. So you may want to provide initial-data-zips for your docker-volumes.  
-*compose-env-manager init* will download the specified zip and extracts it to your specified target-dir. If target-dir is not empty, *compose-env-manager* will skip this volume-init.  
-You can define a *volume-init*-section in your *compose-env-manager.yml* to achieve that, e.g.:
+*container-juggler init* will download the specified zip and extracts it to your specified target-dir. If target-dir is not empty, *container-juggler* will skip this volume-init.  
+You can define a *volume-init*-section in your *container-juggler.yml* to achieve that, e.g.:
 
 ```yaml
 volume-init:
@@ -49,7 +49,7 @@ volume-init:
 > - Don't forget to add this data-directory to .gitignore-file ;-)  
 
 ## Sample Configuration
-### compose-env-manager.yml
+### container-juggler.yml
 
 ```yaml
 scenarios:
@@ -85,7 +85,7 @@ volumes:
 ## RUN
 please check:
 ```bash
-compose-env-manager help
+container-juggler help
 ```
 
 ## Examples
@@ -98,8 +98,8 @@ In order to generate and run the `basic` example with the `all` scenario, you ne
 
 ```
 cd examples/basic
-compose-env-manager generate all
-compose-env-manager run all
+container-juggler generate all
+container-juggler run all
 ```
 
 ## Development setup
@@ -124,7 +124,7 @@ with `make test`.
 - add template-loading from remote-server
 - remove hardcoded-dns-server-ip
 - test on windows
-- ~~add global extra-hosts to compose-env-manager.yml~~
+- ~~add global extra-hosts to container-juggler.yml~~
 - ~~check scenario "all" is present (in configuration)~~
 - ~~check all template-files of scenario "all" are present~~
 - selected scenario:

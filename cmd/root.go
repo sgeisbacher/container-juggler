@@ -11,9 +11,9 @@ import (
 var cfgFile string
 
 var RootCmd = &cobra.Command{
-	Use:   "compose-env-manager",
-	Short: "compose-env-manager manages different environment-scenarios",
-	Long: `compose-env-manager manages different environment-scenarios for docker-compose. 
+	Use:   "container-juggler",
+	Short: "container-juggler manages different environment-scenarios",
+	Long: `container-juggler manages different environment-scenarios for docker-compose. 
 it generates the 'docker-compose.yml'-file based on specified scenario. 
 	
 for missing-services in the specied scenario compared to 'all'-scenario, it adds 'extra-hosts'-entries to all other services. so your services running in docker will try to connect the missing services on your host-machine`,
@@ -28,14 +28,14 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./compose-env-manager.yml)")
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is ./container-juggler.yml)")
 }
 
 func initConfig() {
 	if cfgFile != "" {
 		viper.SetConfigFile(cfgFile)
 	} else {
-		viper.SetConfigName("compose-env-manager")
+		viper.SetConfigName("container-juggler")
 		viper.AddConfigPath(".")
 	}
 
