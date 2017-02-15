@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"log"
+	"net"
 	"testing"
 
 	. "github.com/onsi/gomega"
@@ -245,9 +246,45 @@ scenarios:
 
 	for _, testData := range tableTestData {
 		result := detectMissingServices(testData.scenario)
+
 		Expect(len(result)).To(Equal(len(testData.expected)))
 		for _, exp := range testData.expected {
 			Expect(result).To(ContainElement(exp))
+		}
+	}
+}
+
+func TestAddExtraHosts(t *testing.T) {
+	RegisterTestingT(t)
+
+	ipDetectorMock := mocks.IPDetectorMock{}
+	ipDetectorMock.DetectCall.Returns = net.ParseIP("192.168.10.115")
+
+	generator := Generator{
+		ipDetector: ipDetectorMock,
+	}
+
+	tableTestData := []struct {
+		missingServices    []string
+		expectedExtraHosts []string
+	}{
+		{[]string{"app"}, []string{"app:192.168.10.115"}},
+		{[]string{"app", "db"}, []string{"app:192.168.10.115", "db:192.168.10.115"}},
+		{[]string{}, nil},
+	}
+
+	for _, testData := range tableTestData {
+		serviceMap := map[string]interface{}{}
+		generator.addExtraHosts(serviceMap, testData.missingServices)
+		if testData.expectedExtraHosts == nil {
+			Expect(serviceMap["extra_hosts"]).To(BeNil())
+			continue
+		}
+		extraHosts := serviceMap["extra_hosts"].([]string)
+
+		Expect(len(extraHosts)).To(Equal(len(testData.expectedExtraHosts)))
+		for _, exp := range testData.expectedExtraHosts {
+			Expect(extraHosts).To(ContainElement(exp))
 		}
 	}
 }
