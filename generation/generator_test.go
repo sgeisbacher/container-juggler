@@ -13,6 +13,7 @@ import (
 func TestCheckPrerequisitesFailsOnMissingAllScenario(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()
+	defer viper.Reset()
 
 	viper.Set("scenarios", make(map[string]string))
 	generator := Generator{}
@@ -25,6 +26,7 @@ func TestCheckPrerequisitesFailsOnMissingAllScenario(t *testing.T) {
 func TestCheckPrerequisitesFailsOnEmptyAllScenario(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()
+	defer viper.Reset()
 
 	viper.Set("scenarios.all", []string{})
 	generator := Generator{}
@@ -37,6 +39,7 @@ func TestCheckPrerequisitesFailsOnEmptyAllScenario(t *testing.T) {
 func TestCheckPrerequisitesFailsOnMissingRequestedScenario(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()
+	defer viper.Reset()
 
 	fileHelperMock := &mocks.FileHelperMock{}
 	fileHelperMock.ExistsCall.DefaultReturn = true
@@ -53,6 +56,7 @@ func TestCheckPrerequisitesFailsOnMissingRequestedScenario(t *testing.T) {
 func TestCheckPrerequisitesPassesOnPresentRequestedScenario(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()
+	defer viper.Reset()
 
 	fileHelperMock := &mocks.FileHelperMock{}
 	fileHelperMock.ExistsCall.DefaultReturn = true
@@ -70,6 +74,7 @@ func TestCheckPrerequisitesPassesOnPresentRequestedScenario(t *testing.T) {
 func TestCheckPrerequisitesFailsOnMissingTemplateFile(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()
+	defer viper.Reset()
 
 	fileHelperMock := &mocks.FileHelperMock{}
 	fileHelperMock.ExistsCall.DefaultReturn = false
@@ -115,6 +120,8 @@ func TestConvertToFolderPath(t *testing.T) {
 func TestAddServices(t *testing.T) {
 	RegisterTestingT(t)
 	viper.New()
+	defer viper.Reset()
+	viper.Set("templateFolderPath", "./path/to/templates")
 
 	expectedComposeMapJSON := `{
   "version": "2",
