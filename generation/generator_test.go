@@ -1,6 +1,7 @@
 package generation
 
 import (
+	"bytes"
 	"encoding/json"
 	"log"
 	"testing"
@@ -208,4 +209,45 @@ services:
 
 	Expect(fileHelperMock.WriteCall.Receives.Path).To(Equal("docker-compose.yml"))
 	Expect(fileHelperMock.WriteCall.Receives.Data).To(MatchYAML(expectedDataYAML))
+}
+
+func TestDetectMissingServices(t *testing.T) {
+	RegisterTestingT(t)
+
+	viper.SetConfigType("yaml")
+	defer viper.Reset()
+
+	var yamlConfig = []byte(`
+scenarios:
+  all:
+    - ui
+    - app
+    - db
+  backend:
+    - ui
+    - db
+  frontend:
+    - app
+    - db
+  backendwithoutdb:
+    - ui`)
+	viper.ReadConfig(bytes.NewBuffer(yamlConfig))
+
+	tableTestData := []struct {
+		scenario string
+		expected []string
+	}{
+		{"all", []string{}},
+		{"backend", []string{"app"}},
+		{"frontend", []string{"ui"}},
+		{"backendwithoutdb", []string{"app", "db"}},
+	}
+
+	for _, testData := range tableTestData {
+		result := detectMissingServices(testData.scenario)
+		Expect(len(result)).To(Equal(len(testData.expected)))
+		for _, exp := range testData.expected {
+			Expect(result).To(ContainElement(exp))
+		}
+	}
 }
