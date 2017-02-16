@@ -1,5 +1,6 @@
 package mocks
 
+// FileHelperMock mock-impl of FileHelper-interface
 type FileHelperMock struct {
 	ExistsCall struct {
 		Receives struct {
@@ -19,6 +20,8 @@ type FileHelperMock struct {
 	}
 }
 
+// Exists records callers arguments in ExistsCall.Receives and Returns values of ExistsCall.Returns based on given path.
+// if path not found it returns ExistsCall.DefaultReturn
 func (fh *FileHelperMock) Exists(path string) bool {
 	if fh.ExistsCall.Receives.Paths == nil {
 		fh.ExistsCall.Receives.Paths = []string{}

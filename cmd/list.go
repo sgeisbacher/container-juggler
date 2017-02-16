@@ -12,12 +12,12 @@ var listCmd = &cobra.Command{
 	Short: "lists all available environments",
 	Run: func(cmd *cobra.Command, args []string) {
 		scenarios := viper.GetStringMapStringSlice("scenarios")
-		for key, _ := range scenarios {
+		for key := range scenarios {
 			fmt.Println(key)
 		}
 	},
 }
 
 func init() {
-	RootCmd.AddCommand(listCmd)
+	rootCmd.AddCommand(listCmd)
 }

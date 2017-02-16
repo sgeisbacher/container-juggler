@@ -2,6 +2,7 @@ package mocks
 
 import "fmt"
 
+// TemplateLoaderMock mock-impl of TemplateLoader-interface
 type TemplateLoaderMock struct {
 	LoadCall struct {
 		Receives struct {
@@ -14,6 +15,7 @@ type TemplateLoaderMock struct {
 	}
 }
 
+// Load records callers arguments in LoadCall.Receives and returns LoadCall.Returns.Data and LoadCall.Return.Err values based on given path
 func (tl *TemplateLoaderMock) Load(path string) (map[string]interface{}, error) {
 	if tl.LoadCall.Receives.Paths == nil {
 		tl.LoadCall.Receives.Paths = []string{}
