@@ -8,6 +8,7 @@ import (
 
 type DefaultTemplateLoader struct{}
 
+// Load loads data from path into dictionary
 func (tl DefaultTemplateLoader) Load(path string) (map[string]interface{}, error) {
 	text, err := ioutil.ReadFile(path)
 	if err != nil {

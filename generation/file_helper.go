@@ -5,8 +5,10 @@ import (
 	"os"
 )
 
+// DefaultFileHelper using real filesystem
 type DefaultFileHelper struct{}
 
+// Exists checks if file at path exists
 func (fh DefaultFileHelper) Exists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil

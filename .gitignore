@@ -30,3 +30,4 @@ container-juggler-linux-amd64
 vendor/
 !vendor/vendor.json
 coverage.out
+docker-compose.yml

@@ -11,25 +11,30 @@ import (
 	"github.com/spf13/viper"
 )
 
+// TemplateLoader interface to provide data from file at path as dictionary
 type TemplateLoader interface {
 	Load(path string) (map[string]interface{}, error)
 }
 
+// FileHelper interface to provide utility-funcations for common file-operations
 type FileHelper interface {
 	Exists(path string) bool
 	Write(path, data string) error
 }
 
+// IPDetector interface to detect local outbound-ip-address
 type IPDetector interface {
 	Detect() net.IP
 }
 
+// Generator capsulates generation-functionality with its dependencies
 type Generator struct {
 	tmplLoader TemplateLoader
 	fileHelper FileHelper
 	ipDetector IPDetector
 }
 
+// CreateGenerator constructs Generator
 func CreateGenerator() Generator {
 	return Generator{
 		tmplLoader: DefaultTemplateLoader{},
@@ -69,6 +74,7 @@ func validateScenario(scenario string, fileHelper FileHelper) error {
 	return nil
 }
 
+// Generate generates docker-compose.yml based on scenario-config
 func (g Generator) Generate(scenario string) error {
 	if len(scenario) == 0 {
 		scenario = "all"

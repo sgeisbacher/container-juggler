@@ -2,11 +2,12 @@ package volumeadmin
 
 import (
 	"fmt"
-	"github.com/asaskevich/govalidator"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
+
+	"github.com/asaskevich/govalidator"
 )
 
 type FileDownloader struct{}
@@ -18,7 +19,7 @@ func (fd FileDownloader) Download(source string) (*os.File, error) {
 	}
 	defer tmpFile.Close()
 
-	var content io.ReadCloser = nil
+	var content io.ReadCloser
 	isURL := govalidator.IsURL(source)
 	if isURL {
 		content, err = fromHTTP(source)

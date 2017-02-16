@@ -12,22 +12,26 @@ type Downloader interface {
 	Download(url string) (*os.File, error)
 }
 
+// VolumeLoader encapsulates VolumeLoader-functionality and its dependencies
 type VolumeLoader struct {
 	downloader Downloader
 }
 
+// New constructs VolumeLoader
 func New() VolumeLoader {
 	return VolumeLoader{
 		downloader: FileDownloader{},
 	}
 }
 
+// Volume represents volume-init-data from configuration-file
 type Volume struct {
 	Name   string
 	Source string
 	Target string
 }
 
+// Load initializes given target with the content of source-archive
 func (vl VolumeLoader) Load(force bool) error {
 	zipExtractor := extractor.NewZip()
 	if !viper.IsSet("volume-init") {
