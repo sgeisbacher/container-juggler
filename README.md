@@ -117,19 +117,17 @@ with `make test`.
 [govendor]: https://github.com/kardianos/govendor
 
 ## TODOS
-- check system prerequisites in bash(bat)-wrapper (python3, docker, ...)
-- ~~detect required extra-hosts by diffing all-scenario with current-scenario~~
-- ~~introduce pytest~~
-- ~~stability-adjustments (no args, ...)~~
-- add template-loading from remote-server
-- remove hardcoded-dns-server-ip
-- test on windows
-- ~~add global extra-hosts to container-juggler.yml~~
-- ~~check scenario "all" is present (in configuration)~~
-- ~~check all template-files of scenario "all" are present~~
-- selected scenario:
-    - ~~detect missing services (against "all"-scenario)~~
-    - ~~add extra-hosts for missing scenarios~~
-    - add extra-hosts for global external-services
-    - ~~add all services to compose-data-map~~
-- ~~gen yaml and write it to docker-compose.yml~~
+
+- [x] ~~detect required extra-hosts by diffing all-scenario with current-scenario~~
+- [x] ~~stability-adjustments (no args, ...)~~
+- [ ] add template-loading from remote-server
+- [ ] test on windows
+- [ ] add static extra-hosts to container-juggler.yml
+- [x] ~~check scenario "all" is present (in configuration)~~
+- [x] ~~check all template-files of scenario "all" are present~~
+- [x] ~~detect missing services (against "all"-scenario)~~
+- [x] ~~add extra-hosts for missing scenarios~~
+- [ ] add extra-hosts for global external-services
+- [x] ~~add all services to compose-data-map~~
+- [x] ~~gen yaml and write it to docker-compose.yml~~
+- [ ] build dependency-tree to generate depends_on-entries in docker-compose.yml
