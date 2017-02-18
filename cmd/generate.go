@@ -15,6 +15,7 @@ var generateCmd = &cobra.Command{
 
 [scenario] defaults to all`,
 	Run: func(cmd *cobra.Command, args []string) {
+		initConfig()
 		fmt.Println("running generate command ...")
 		generator := generation.CreateGenerator()
 		scenario := ""
