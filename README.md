@@ -131,3 +131,6 @@ with `make test`.
 - [x] ~~add all services to compose-data-map~~
 - [x] ~~gen yaml and write it to docker-compose.yml~~
 - [ ] build dependency-tree to generate depends_on-entries in docker-compose.yml
+- [ ] autocompletion for bash and zsh
+- [ ] add flag to generate-cmd to write generated docker-compose.yml to stdout only
+- [ ] run init on empty data-dirs
