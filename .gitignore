@@ -24,9 +24,7 @@ _testmain.go
 *.prof
 .vscode
 container-juggler
-container-juggler-win64.exe
-container-juggler-darwin-amd64
-container-juggler-linux-amd64
+bin/
 vendor/
 !vendor/vendor.json
 coverage.out
