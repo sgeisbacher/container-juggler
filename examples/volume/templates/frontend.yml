@@ -1,4 +1,4 @@
-build: ./examples/basic/templates/frontend
+build: ./frontend
 links:
     - app
 ports:

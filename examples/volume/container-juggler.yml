@@ -1,4 +1,4 @@
-templateFolderPath: ./examples/volume/templates/
+templateFolderPath: ./templates/
 scenarios:
     all:
         - frontend
@@ -12,5 +12,5 @@ scenarios:
         - db
 volume-init:
     - name: app-data-dir
-      source: ./examples/volume/templates/appdata.zip 
+      source: https://github.com/sgeisbacher/container-juggler/raw/master/examples/appdata.zip
       target: ./data/app

@@ -29,3 +29,4 @@ vendor/
 !vendor/vendor.json
 coverage.out
 docker-compose.yml
+examples/volume/data/
