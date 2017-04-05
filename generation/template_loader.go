@@ -1,16 +1,14 @@
 package generation
 
-import (
-	"io/ioutil"
+import yaml "gopkg.in/yaml.v2"
 
-	yaml "gopkg.in/yaml.v2"
-)
-
-type DefaultTemplateLoader struct{}
+type DefaultTemplateLoader struct {
+	fileHelper FileHelper
+}
 
 // Load loads data from path into dictionary
 func (tl DefaultTemplateLoader) Load(path string) (map[string]interface{}, error) {
-	text, err := ioutil.ReadFile(path)
+	text, err := tl.fileHelper.Read(path)
 	if err != nil {
 		return nil, err
 	}

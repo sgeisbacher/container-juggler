@@ -18,6 +18,15 @@ type FileHelperMock struct {
 			Error error
 		}
 	}
+	ReadCall struct {
+		Receives struct {
+			Paths []string
+		}
+		Returns struct {
+			Contents map[string][]byte
+			Errors   map[string]error
+		}
+	}
 }
 
 // Exists records callers arguments in ExistsCall.Receives and Returns values of ExistsCall.Returns based on given path.
@@ -37,4 +46,11 @@ func (fh *FileHelperMock) Write(path string, data string) error {
 	fh.WriteCall.Receives.Path = path
 	fh.WriteCall.Receives.Data = data
 	return fh.WriteCall.Returns.Error
+}
+
+func (fh *FileHelperMock) Read(path string) ([]byte, error) {
+	fh.ReadCall.Receives.Paths = append(fh.ReadCall.Receives.Paths, path)
+	content := fh.ReadCall.Returns.Contents[path]
+	err := fh.ReadCall.Returns.Errors[path]
+	return content, err
 }

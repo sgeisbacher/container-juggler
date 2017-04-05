@@ -3,6 +3,7 @@ package generation
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net"
 	"testing"
@@ -11,6 +12,60 @@ import (
 	"github.com/sgeisbacher/container-juggler/mocks"
 	"github.com/spf13/viper"
 )
+
+func generate(templateMap map[string][]byte, scenario string) (string, error) {
+	fileHelperMock := &mocks.FileHelperMock{}
+	fileHelperMock.ExistsCall.DefaultReturn = true
+	fileHelperMock.ExistsCall.Returns = map[string]bool{}
+
+	fileHelperMock.ReadCall.Returns.Contents = templateMap
+
+	ipDetectorMock := mocks.IPDetectorMock{}
+	ipDetectorMock.DetectCall.Returns = net.ParseIP("192.168.10.115")
+
+	generator := Generator{
+		fileHelper: fileHelperMock,
+		tmplLoader: DefaultTemplateLoader{fileHelper: fileHelperMock},
+		ipDetector: ipDetectorMock,
+	}
+
+	buf := &bytes.Buffer{}
+	err := generator.Generate(scenario, buf)
+
+	fmt.Println(fileHelperMock.ReadCall.Receives.Paths)
+	return buf.String(), err
+}
+
+func TestSimpleGeneration(t *testing.T) {
+	RegisterTestingT(t)
+	viper.New()
+	defer viper.Reset()
+
+	viper.Set("scenarios.all", []string{"gui", "app", "db"})
+	viper.Set("scenarios.backenddev", []string{"gui", "db"})
+	viper.Set("scenarios.frontenddev", []string{"app", "db"})
+
+	templateMap := map[string][]byte{
+		"./gui.yml": []byte(`image: "sgeisbacher/gui"`),
+		"./app.yml": []byte(`image: "sgeisbacher/app"`),
+		"./db.yml":  []byte(`image: "sgeisbacher/db"`),
+	}
+
+	expectedComposeYml := `
+services:
+  db:
+    image: sgeisbacher/db
+  app:
+    image: sgeisbacher/app
+  gui:
+    image: sgeisbacher/gui
+version: "2"
+`
+	output, err := generate(templateMap, "all")
+
+	Expect(err).To(BeNil())
+	Expect(output).To(MatchYAML(expectedComposeYml))
+}
 
 func TestCheckPrerequisitesFailsOnMissingAllScenario(t *testing.T) {
 	RegisterTestingT(t)
@@ -206,10 +261,10 @@ services:
 	fileHelperMock := &mocks.FileHelperMock{}
 	generator := Generator{fileHelper: fileHelperMock}
 
-	generator.exportComposeMapAsYAML(composeMap)
+	buf := &bytes.Buffer{}
+	generator.exportComposeMapAsYAML(composeMap, buf)
 
-	Expect(fileHelperMock.WriteCall.Receives.Path).To(Equal("docker-compose.yml"))
-	Expect(fileHelperMock.WriteCall.Receives.Data).To(MatchYAML(expectedDataYAML))
+	Expect(buf.String()).To(MatchYAML(expectedDataYAML))
 }
 
 func TestDetectMissingServices(t *testing.T) {

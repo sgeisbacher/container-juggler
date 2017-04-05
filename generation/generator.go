@@ -3,6 +3,7 @@ package generation
 import (
 	"errors"
 	"fmt"
+	"io"
 	"net"
 	"strings"
 
@@ -11,15 +12,18 @@ import (
 	"github.com/spf13/viper"
 )
 
-// TemplateLoader interface to provide data from file at path as dictionary
-type TemplateLoader interface {
-	Load(path string) (map[string]interface{}, error)
-}
+const DEFAULT_TEMPLATE_PATH string = "."
 
 // FileHelper interface to provide utility-funcations for common file-operations
 type FileHelper interface {
 	Exists(path string) bool
 	Write(path, data string) error
+	Read(path string) ([]byte, error)
+}
+
+// TemplateLoader interface to provide data from file at path as dictionary
+type TemplateLoader interface {
+	Load(path string) (map[string]interface{}, error)
 }
 
 // IPDetector interface to detect local outbound-ip-address
@@ -36,9 +40,10 @@ type Generator struct {
 
 // CreateGenerator constructs Generator
 func CreateGenerator() Generator {
+	fileHelper := DefaultFileHelper{}
 	return Generator{
-		tmplLoader: DefaultTemplateLoader{},
-		fileHelper: DefaultFileHelper{},
+		tmplLoader: DefaultTemplateLoader{fileHelper},
+		fileHelper: fileHelper,
 		ipDetector: UplinkIPDetector{},
 	}
 }
@@ -75,7 +80,7 @@ func validateScenario(scenario string, fileHelper FileHelper) error {
 }
 
 // Generate generates docker-compose.yml based on scenario-config
-func (g Generator) Generate(scenario string) error {
+func (g Generator) Generate(scenario string, writer io.Writer) error {
 	if len(scenario) == 0 {
 		scenario = "all"
 	}
@@ -88,7 +93,7 @@ func (g Generator) Generate(scenario string) error {
 	if err := g.addServices(composeMap, scenario, missingServices); err != nil {
 		return err
 	}
-	if err := g.exportComposeMapAsYAML(composeMap); err != nil {
+	if err := g.exportComposeMapAsYAML(composeMap, writer); err != nil {
 		return err
 	}
 	fmt.Println("successfully generated 'docker-compose.yml'")
@@ -144,12 +149,12 @@ func (g Generator) addExtraHosts(serviceMap map[string]interface{}, missingServi
 	serviceMap["extra_hosts"] = extraHosts
 }
 
-func (g Generator) exportComposeMapAsYAML(composeMap map[string]interface{}) error {
+func (g Generator) exportComposeMapAsYAML(composeMap map[string]interface{}, writer io.Writer) error {
 	composeYAML, err := yaml.Marshal(composeMap)
 	if err != nil {
 		return err
 	}
-	g.fileHelper.Write("docker-compose.yml", string(composeYAML))
+	writer.Write(composeYAML)
 	return nil
 }
 
@@ -162,6 +167,9 @@ func createEmptyComposeMap() map[string]interface{} {
 
 func getTemplateFolderPath() string {
 	templateFolderPath := viper.GetString("templateFolderPath")
+	if len(templateFolderPath) == 0 {
+		templateFolderPath = DEFAULT_TEMPLATE_PATH
+	}
 	return convertToFolderPath(templateFolderPath)
 }
 
