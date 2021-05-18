@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cloudfoundry/archiver/extractor"
+	"code.cloudfoundry.org/archiver/extractor"
 	"github.com/spf13/viper"
 )
 
