@@ -15,6 +15,12 @@
 			"revisionTime": "2017-01-04T21:11:26Z"
 		},
 		{
+			"checksumSHA1": "Ov+ja3hmONKxbhq9HAgK/vHSi/0=",
+			"path": "github.com/cyphar/filepath-securejoin",
+			"revision": "90b581977c9ec098414249ecbe5f33b5f83e3f4a",
+			"revisionTime": "2020-11-25T11:45:54Z"
+		},
+		{
 			"checksumSHA1": "hveFTNQ9YEyYRs6SWuXM+XU9qRI=",
 			"path": "github.com/fsnotify/fsnotify",
 			"revision": "fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197",
@@ -175,6 +181,12 @@
 			"path": "github.com/pelletier/go-toml",
 			"revision": "439fbba1f887c286024370cb4f281ba815c4c7d7",
 			"revisionTime": "2016-12-29T18:51:04Z"
+		},
+		{
+			"checksumSHA1": "Qo2E/26skb9mZQ3b2Mh6QDkpBLs=",
+			"path": "github.com/pkg/errors",
+			"revision": "5dd12d0cfe7f152f80558d591504ce685299311e",
+			"revisionTime": "2020-12-14T06:45:52Z"
 		},
 		{
 			"checksumSHA1": "lBehULzb2/kIK3wZ0gz2yNmHq9s=",
