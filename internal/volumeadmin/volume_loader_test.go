@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	. "github.com/onsi/gomega"
 	"github.com/spf13/viper"
 )
 
@@ -16,11 +17,15 @@ func (d ErroringDownloader) Download(url string) (*os.File, error) {
 }
 
 func TestVolueAdminConfig(t *testing.T) {
+	RegisterTestingT(t)
 	viper.SetConfigFile(filepath.Join("testdata", "volume-init.yml"))
-	viper.ReadInConfig()
+	err := viper.ReadInConfig()
+	Expect(err).To(BeNil())
+
 	defer viper.Reset()
 	vl := VolumeLoader{
 		downloader: ErroringDownloader{},
 	}
-	vl.Load(false)
+	err = vl.Load(false)
+	Expect(err).To(Equal(fmt.Errorf("Expected error")))
 }

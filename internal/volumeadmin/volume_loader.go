@@ -4,10 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/cloudfoundry/archiver/extractor"
+	"code.cloudfoundry.org/archiver/extractor"
 	"github.com/spf13/viper"
 )
 
+// Downloader interface which defines a url to load
 type Downloader interface {
 	Download(url string) (*os.File, error)
 }

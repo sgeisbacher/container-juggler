@@ -7,12 +7,12 @@ import (
 	"net"
 	"strings"
 
-	yaml "gopkg.in/yaml.v2"
+	yaml "gopkg.in/yaml.v3"
 
 	"github.com/spf13/viper"
 )
 
-const DEFAULT_TEMPLATE_PATH string = "."
+const defaultTemplatePath string = "."
 
 // FileHelper interface to provide utility-funcations for common file-operations
 type FileHelper interface {
@@ -154,8 +154,8 @@ func (g Generator) exportComposeMapAsYAML(composeMap map[string]interface{}, wri
 	if err != nil {
 		return err
 	}
-	writer.Write(composeYAML)
-	return nil
+	_, err = writer.Write(composeYAML)
+	return err
 }
 
 func createEmptyComposeMap() map[string]interface{} {
@@ -168,7 +168,7 @@ func createEmptyComposeMap() map[string]interface{} {
 func getTemplateFolderPath() string {
 	templateFolderPath := viper.GetString("templateFolderPath")
 	if len(templateFolderPath) == 0 {
-		templateFolderPath = DEFAULT_TEMPLATE_PATH
+		templateFolderPath = defaultTemplatePath
 	}
 	return convertToFolderPath(templateFolderPath)
 }

@@ -23,8 +23,8 @@ _testmain.go
 *.test
 *.prof
 .vscode
-container-juggler
 bin/
+out/
 vendor/
 !vendor/vendor.json
 coverage.out

@@ -1,7 +1,8 @@
 package generation
 
-import yaml "gopkg.in/yaml.v2"
+import yaml "gopkg.in/yaml.v3"
 
+// DefaultTemplateLoader defines a fileHelper
 type DefaultTemplateLoader struct {
 	fileHelper FileHelper
 }

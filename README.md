@@ -1,4 +1,5 @@
 # container-juggler
+
 [![Build Status](https://travis-ci.org/sgeisbacher/container-juggler.svg?branch=master)](https://travis-ci.org/sgeisbacher/container-juggler) [![Code Climate](https://codeclimate.com/github/sgeisbacher/container-juggler/badges/gpa.svg)](https://codeclimate.com/github/sgeisbacher/container-juggler) [![Go Report Card](https://goreportcard.com/badge/github.com/sgeisbacher/container-juggler)](https://goreportcard.com/report/github.com/sgeisbacher/container-juggler) [![Coverage Status](https://coveralls.io/repos/github/sgeisbacher/container-juggler/badge.svg?branch=master)](https://coveralls.io/github/sgeisbacher/container-juggler?branch=master) [![Issue Count](https://codeclimate.com/github/sgeisbacher/container-juggler/badges/issue_count.svg)](https://codeclimate.com/github/sgeisbacher/container-juggler)  
 **container-juggler** is a wrapper/config-generator for **docker-compose** to manage different development-scenarios.
 
@@ -9,8 +10,11 @@ The renderer will detect missing services by diffing the selected with the all-*
 Now you are able to run parts of your multi-tier-application directly on your host-machine (parts you're currently working on) and all others in docker with docker-compose.  
 
 ## Installation
+
 todo
+
 ## Project-Configuration
+
 - create a **container-juggler.yml** in the root-folder of your project
 - add at least the *all*-scenario, e.g.:
 
@@ -22,6 +26,7 @@ scenarios:
     - app
     - db
 ```
+
 - *container-juggler* will lookup the service-templates in **./templates/\<service-name\>.yml**. So create your service-templates (like in the example above *frontend.yml*, *app.yml* and *db.yml*) as you know from [docker-compose-file-reference](https://docs.docker.com/compose/compose-file/) in that folder. e.g.:
 
 ```yaml
@@ -29,8 +34,11 @@ image: nginx
 ports:
   - "80:80"
 ```
+
 ## Additional Configuration
+
 ### volume-init
+
 If you run *docker-compose up* your database and all other docker-volumes will be empty. So you may want to provide initial-data-zips for your docker-volumes.  
 *container-juggler init* will download the specified zip and extracts it to your specified target-dir. If target-dir is not empty, *container-juggler* will skip this volume-init.  
 You can define a *volume-init*-section in your *container-juggler.yml* to achieve that, e.g.:
@@ -41,14 +49,15 @@ volume-init:
       source: http://example.org/app-data.zip
       target: ./data/app
     - name: mysql-data-dir
-      source: /path/to/file.zip 
+      source: /path/to/file.zip
       target: ./data/mysql
 ```
 
 > **Note!**  
-> - Don't forget to add this data-directory to .gitignore-file ;-)  
+> - Don't forget to add this data-directory to .gitignore-file ;-)
 
 ## Sample Configuration
+
 ### container-juggler.yml
 
 ```yaml
@@ -83,7 +92,9 @@ volumes:
 ```
 
 ## RUN
+
 please check:
+
 ```bash
 container-juggler help
 ```
@@ -96,7 +107,7 @@ The `basic` example contains a configuration for a simple setup with a `frontend
 
 In order to generate and run the `basic` example with the `all` scenario, you need to execute the following commands from the repository root:
 
-```
+```bash
 cd examples/basic
 container-juggler generate all
 container-juggler run all
@@ -104,17 +115,9 @@ container-juggler run all
 
 ## Development setup
 
-In order to use the same versions of the dependencies we provide a
-`vendor/vendor.json` file which you can use with [govendor][]
+Because this project is using go modules you have to use at least go version 1.11
 
-```bash
-govendor sync
-```
-
-Once you have all dependencies inside the `vendor` folder, you can run the tests
-with `make test`.
-
-[govendor]: https://github.com/kardianos/govendor
+To lint it locally you have to install [golangci-lint](https://github.com/golangci/golangci-lint)
 
 ## TODOS
 
