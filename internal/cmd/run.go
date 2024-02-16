@@ -19,8 +19,14 @@ var runCmd = &cobra.Command{
 		dockerComposeCmd := exec.Command(path, "up")
 		dockerComposeCmd.Stdout = os.Stdout
 		dockerComposeCmd.Stderr = os.Stderr
-		dockerComposeCmd.Run()
-		dockerComposeCmd.Wait()
+		err = dockerComposeCmd.Run()
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = dockerComposeCmd.Wait()
+		if err != nil {
+			log.Fatal(err)
+		}
 	},
 }
 

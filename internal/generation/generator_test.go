@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	. "github.com/onsi/gomega"
-	"github.com/sgeisbacher/container-juggler/mocks"
+	"github.com/sgeisbacher/container-juggler/internal/mocks"
 	"github.com/spf13/viper"
 )
 
@@ -262,7 +262,7 @@ services:
 	generator := Generator{fileHelper: fileHelperMock}
 
 	buf := &bytes.Buffer{}
-	generator.exportComposeMapAsYAML(composeMap, buf)
+	Expect(generator.exportComposeMapAsYAML(composeMap, buf)).To(BeNil())
 
 	Expect(buf.String()).To(MatchYAML(expectedDataYAML))
 }
@@ -287,7 +287,7 @@ scenarios:
     - db
   backendwithoutdb:
     - ui`)
-	viper.ReadConfig(bytes.NewBuffer(yamlConfig))
+	Expect(viper.ReadConfig(bytes.NewBuffer(yamlConfig))).To(BeNil())
 
 	tableTestData := []struct {
 		scenario string

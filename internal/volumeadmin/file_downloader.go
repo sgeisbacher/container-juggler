@@ -3,17 +3,18 @@ package volumeadmin
 import (
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 
 	"github.com/asaskevich/govalidator"
 )
 
+// FileDownloader struct
 type FileDownloader struct{}
 
+// Download a file
 func (fd FileDownloader) Download(source string) (*os.File, error) {
-	tmpFile, err := ioutil.TempFile("", "download")
+	tmpFile, err := os.CreateTemp("", "download")
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +24,7 @@ func (fd FileDownloader) Download(source string) (*os.File, error) {
 	isURL := govalidator.IsURL(source)
 	if isURL {
 		content, err = fromHTTP(source)
-	} else if _, err := os.Stat(source); err == nil {
+	} else if _, err = os.Stat(source); err == nil {
 		content, err = fromFileSystem(source)
 	} else {
 		return nil, fmt.Errorf("Source is neither a valid url nor a valid file path: %s", source)
@@ -37,6 +38,7 @@ func (fd FileDownloader) Download(source string) (*os.File, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return tmpFile, nil
 }
 
